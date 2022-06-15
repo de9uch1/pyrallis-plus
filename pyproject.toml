@@ -1,0 +1,21 @@
+[tool.isort]
+profile = "black"
+
+[tool.poetry]
+name = "pyrallis-plus"
+version = "0.1.0"
+description = "Enhanced pyrallis"
+authors = ["Hiroyuki Deguchi <deguchi.hiroyuki.db0@is.naist.jp>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pyrallis = "^0.3.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+isort = "^5.10.1"
+black = "^22.3.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

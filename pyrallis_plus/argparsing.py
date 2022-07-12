@@ -110,6 +110,11 @@ class ArgumentParser(pyrallis.argparsing.ArgumentParser, Generic[T]):
             pyrallis.argparsing.ArgumentParser, self
         ).parse_known_args(args, namespace)
 
+        # for action="store_true"
+        parsed_args = Namespace(
+            **{name: str(arg) for name, arg in vars(parsed_args).items()}
+        )
+
         parsed_args = self._postprocessing(parsed_args)
         return parsed_args, unparsed_args
 

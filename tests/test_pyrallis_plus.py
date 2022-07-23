@@ -13,6 +13,8 @@ class TrainConfig:
     workers: int = field(default=8, metadata={"alias": ["-#"]})
     # The experiment name
     exp_name: str = pyrallis_plus.field(default="default_exp", alias=["--name"])
+    # Debug mode.
+    debug: bool = False
 
 
 def test_help():
@@ -31,3 +33,8 @@ def test_field():
     exp_name = "abc"
     cfg = pyrallis_plus.parse(config_class=TrainConfig, args=["--name", exp_name])
     assert cfg.exp_name == exp_name
+
+
+def test_bool():
+    cfg = pyrallis_plus.parse(config_class=TrainConfig, args=["--debug"])
+    assert cfg.debug

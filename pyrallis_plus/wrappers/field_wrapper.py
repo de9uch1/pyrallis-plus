@@ -1,5 +1,5 @@
 from logging import getLogger
-from typing import List
+from typing import Any, Dict, List
 
 import pyrallis
 
@@ -22,6 +22,24 @@ class FieldWrapper(pyrallis.wrappers.field_wrapper.FieldWrapper):
 
     The `field` argument is the actually wrapped `dataclasses.Field` instance.
     """
+
+    @property
+    def custom_arg_options(self) -> Dict[str, Any]:
+        """Custom argparse options that overwrite those in `arg_options`.
+
+        Can be set by using the `field` function, passing in a keyword argument
+        that would usually be passed to the parser.add_argument(
+        *option_strings, **kwargs) method.
+        """
+        custom_args = self.field.metadata.get("custom_args", {})
+        if (
+            issubclass(self.type, bool)
+            and self.default is not None
+            and isinstance(self.default, bool)
+            and custom_args.get("action", None) is not None
+        ):
+            custom_args["action"] = "store_false" if self.default else "store_true"
+        return custom_args
 
     @property
     def alias(self) -> List[str]:

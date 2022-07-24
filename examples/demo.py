@@ -18,6 +18,8 @@ class ComputeConfig:
     workers: int = field(default=8, metadata={"alias": ["--num-workers", "-#"]})
     # The number of workers for training
     eval_workers: Optional[int] = field(default=None)
+    # Debug mode.
+    debug: bool = False
 
     def __post_init__(self):
         # A builtin method of dataclasses, used for post-processing our configuration.

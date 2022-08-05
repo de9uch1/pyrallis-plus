@@ -5,15 +5,38 @@ This is an enhanced `pyrallis <https://github.com/eladrich/pyrallis>`_, dataclas
 
 `Pyrallis <https://github.com/eladrich/pyrallis>`_ is an awesome configuration library based on the python dataclass.
 It is designed to be a simple and clean library.
-This extended library adds some features to Pyrallis at the expense of simplicity.
+This library adds some features to Pyrallis at the expense of simplicity.
 
-The extended features are as follows:
+Features
+========
+These extended features are available:
 
-- :code:`-h` option: the short option of :code:`--help`
-- Command-line option alias:
+Boolean option
+--------------
+:code:`store_true` and :code:`store_false` are automatically set from the default value.
 
-  - Defined by :code:`metadata` in dataclass fields.
-  - :code:`pyrallis_plus.field()` can also define aliases by the :code:`alias` argument.
+.. code-block:: python
+
+   from dataclasses import dataclass
+   import pyrallis_plus
+
+   @dataclass
+   class Config:
+       bool_option: bool = False  # Set `store_true` as action.
+
+   @pyrallis_plus.wrap()
+   def main(cfg: Config):
+       print(pyrallis_plus.dump(cfg))
+
+
+Help option
+-----------
+:code:`-h` option can be also used as the short option of :code:`--help`
+
+Alias
+-----
+- Defined by :code:`metadata` in dataclass fields.
+- :code:`pyrallis_plus.field()` can also define aliases by the :code:`alias` argument.
 
 Installation
 ============

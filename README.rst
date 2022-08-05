@@ -29,6 +29,24 @@ Boolean option
    def main(cfg: Config):
        print(pyrallis.dump(cfg))
 
+List option
+-----------
+:code:`nargs="*"` will be automatically set in list fields.
+
+.. code-block:: python
+
+   from dataclasses import dataclass, field
+   import pyrallis
+   import pyrallis_plus
+
+   @dataclass
+   class Config:
+       names: List[str] = field(default_factory=[])  # Set `nargs="*"`.
+
+   @pyrallis.wrap()
+   def main(cfg: Config):
+       print(pyrallis.dump(cfg))
+
 
 Help option
 -----------

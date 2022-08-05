@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 from dataclasses import dataclass, field
+from typing import List
 
 import pyrallis
+
 import pyrallis_plus
 
 
@@ -16,6 +18,8 @@ class TrainConfig:
     exp_name: str = pyrallis.field(default="default_exp", alias=["--name"])
     # Debug mode.
     debug: bool = False
+    # Tags
+    tags: List[str] = pyrallis.field(default=["a", "b"], is_mutable=True)
 
 
 def test_help():
@@ -39,3 +43,11 @@ def test_field():
 def test_bool():
     cfg = pyrallis.parse(config_class=TrainConfig, args=["--debug"])
     assert cfg.debug
+
+
+def test_list():
+    cfg = pyrallis.parse(config_class=TrainConfig, args=[])
+    assert cfg.tags == ["a", "b"]
+
+    cfg = pyrallis.parse(config_class=TrainConfig, args=["--tags", "x", "y", "z"])
+    assert cfg.tags == ["x", "y", "z"]

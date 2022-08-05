@@ -3,7 +3,7 @@
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 import pyrallis
 import pyrallis_plus
@@ -35,6 +35,8 @@ class LogConfig:
     exp_name: str = pyrallis.field(default="default_exp", alias=["--name", "-n"])
     # The experiment root folder path
     exp_root: Path = field(default=Path("/share/experiments"))
+    # The experiment tags
+    exp_tags: List[str] = field(default_factory=list)
 
     @property
     def exp_dir(self) -> Path:

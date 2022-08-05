@@ -33,12 +33,19 @@ class FieldWrapper(pyrallis.wrappers.field_wrapper.FieldWrapper):
         """
         custom_args = self.field.metadata.get("custom_args", {})
         if (
-            self.type is bool
+            self.is_bool
             and self.default is not None
             and isinstance(self.default, bool)
             and custom_args.get("action", None) is None
         ):
             custom_args["action"] = "store_false" if self.default else "store_true"
+            return custom_args
+
+        if self.is_list:
+            nargs = custom_args.get("nargs", None)
+            custom_args["nargs"] = "*" if nargs is None else nargs
+            return custom_args
+
         return custom_args
 
     @property

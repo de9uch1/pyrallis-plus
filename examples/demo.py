@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
+import pyrallis
 import pyrallis_plus
 
 # logging.basicConfig(level=logging.DEBUG)
@@ -31,7 +32,7 @@ class LogConfig:
     """Config for logging arguments"""
 
     # The experiment name
-    exp_name: str = pyrallis_plus.field(default="default_exp", alias=["--name", "-n"])
+    exp_name: str = pyrallis.field(default="default_exp", alias=["--name", "-n"])
     # The experiment root folder path
     exp_root: Path = field(default=Path("/share/experiments"))
 
@@ -51,14 +52,14 @@ class TrainConfig:
     compute: ComputeConfig = field(default_factory=ComputeConfig)
 
 
-@pyrallis_plus.wrap()
+@pyrallis.wrap()
 def main(cfg: TrainConfig):
     print(f"Training {cfg.log.exp_name}...")
     print(
         f"\tUsing {cfg.compute.workers} workers and {cfg.compute.eval_workers} evaluation workers"
     )
     print(f"\tSaving to {cfg.log.exp_dir}")
-    print(pyrallis_plus.dump(cfg))
+    print(pyrallis.dump(cfg))
 
 
 if __name__ == "__main__":

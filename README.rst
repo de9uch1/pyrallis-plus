@@ -9,7 +9,7 @@ This library adds some features to Pyrallis at the expense of simplicity.
 
 Features
 ========
-These extended features are available:
+These extended features are available by just importing :code:`pyrallis_plus`:
 
 Boolean option
 --------------
@@ -18,15 +18,16 @@ Boolean option
 .. code-block:: python
 
    from dataclasses import dataclass
+   import pyrallis
    import pyrallis_plus
 
    @dataclass
    class Config:
        bool_option: bool = False  # Set `store_true` as action.
 
-   @pyrallis_plus.wrap()
+   @pyrallis.wrap()
    def main(cfg: Config):
-       print(pyrallis_plus.dump(cfg))
+       print(pyrallis.dump(cfg))
 
 
 Help option
@@ -36,7 +37,7 @@ Help option
 Alias
 -----
 - Defined by :code:`metadata` in dataclass fields.
-- :code:`pyrallis_plus.field()` can also define aliases by the :code:`alias` argument.
+- :code:`pyrallis.field()` can also define aliases by the :code:`alias` argument.
 
 Installation
 ============
@@ -48,8 +49,4 @@ Installation
 Usage
 =====
 
-Just replace the importing :code:`pyrallis` module with the :code:`pyrallis_plus` module in following functions.
-
-- :code:`pyrallis.parse` -> :code:`pyrallis_plus.parse`
-- :code:`@pyrallis.wrap` -> :code:`@pyrallis_plus.wrap`
-- :code:`pyrallis.field` -> :code:`pyrallis_plus.field`
+Just import :code:`pyrallis_plus` and you can use the :code:`pyrallis` module with the extension.

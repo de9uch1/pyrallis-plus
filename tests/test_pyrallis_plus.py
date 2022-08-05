@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, field
 
+import pyrallis
 import pyrallis_plus
 
 
@@ -12,29 +13,29 @@ class TrainConfig:
     # The number of workers for training
     workers: int = field(default=8, metadata={"alias": ["-#"]})
     # The experiment name
-    exp_name: str = pyrallis_plus.field(default="default_exp", alias=["--name"])
+    exp_name: str = pyrallis.field(default="default_exp", alias=["--name"])
     # Debug mode.
     debug: bool = False
 
 
 def test_help():
     try:
-        pyrallis_plus.parse(config_class=TrainConfig, args=["-h"])
+        pyrallis.parse(config_class=TrainConfig, args=["-h"])
     except SystemExit as e:
         assert e.code == 0
 
 
 def test_alias():
-    cfg = pyrallis_plus.parse(config_class=TrainConfig, args=["-#", "16"])
+    cfg = pyrallis.parse(config_class=TrainConfig, args=["-#", "16"])
     assert cfg.workers == 16
 
 
 def test_field():
     exp_name = "abc"
-    cfg = pyrallis_plus.parse(config_class=TrainConfig, args=["--name", exp_name])
+    cfg = pyrallis.parse(config_class=TrainConfig, args=["--name", exp_name])
     assert cfg.exp_name == exp_name
 
 
 def test_bool():
-    cfg = pyrallis_plus.parse(config_class=TrainConfig, args=["--debug"])
+    cfg = pyrallis.parse(config_class=TrainConfig, args=["--debug"])
     assert cfg.debug
